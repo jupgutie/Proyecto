@@ -3,6 +3,9 @@ pipeline {
     environment {
         // Configuración de variables de entorno
         EMAIL_RECIPIENTS = 'team@example.com'
+        tools {
+    maven 'apache-maven-3.9.9' // Reemplaza con el nombre de tu herramienta Maven
+}
     }
     stages {
         stage('Checkout') {
