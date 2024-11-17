@@ -14,7 +14,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Compilando el proyecto...'
-                sh 'mvn clean install' // Usa el comando de compilación apropiado para tu proyecto
+                bat 'mvn clean install' // Usa el comando de compilación apropiado para tu proyecto
             }
         }
         stage('Test') {
@@ -26,7 +26,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Desplegando a entorno de pruebas...'
-                sh './deploy.sh' // Simula el despliegue con un script de ejemplo
+                bat './deploy.sh' // Simula el despliegue con un script de ejemplo
             }
         }
     }
