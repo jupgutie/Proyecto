@@ -5,11 +5,6 @@ pipeline {
         TEST_ENV = 'C:\\EntornoPruebas'
     }
 
-    tools {
-        maven 'Maven 3.9.9'
-        jdk 'JDK 17'
-    }
-
     stages {
         stage('Checkout') {
             steps {
