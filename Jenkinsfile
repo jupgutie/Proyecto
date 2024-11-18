@@ -3,7 +3,6 @@ pipeline {
     environment {
         // Configuración de variables de entorno
         EMAIL_RECIPIENTS = 'team@example.com'
-}
     }
     stages {
         stage('Checkout') {
@@ -46,4 +45,3 @@ pipeline {
         }
     }
 }
-
