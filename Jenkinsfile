@@ -26,7 +26,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Desplegando a entorno de pruebas...'
-                bat './deploy.sh' // Simula el despliegue con un script de ejemplo
+                bat './deploy.bat' // Simula el despliegue con un script de ejemplo
             }
         }
     }
