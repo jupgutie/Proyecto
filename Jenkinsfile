@@ -1,47 +1,60 @@
 pipeline {
     agent any
+
     environment {
-        // Configuración de variables de entorno
-        EMAIL_RECIPIENTS = 'team@example.com'
+        TEST_ENV = 'C:\\EntornoPruebas' // Ruta al entorno de pruebas en Windows
     }
+
+    tools {
+        maven 'Maven 3.9.9'
+        jdk 'JDK 17'
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                echo 'Clonando repositorio...'
+                echo 'Clonando el repositorio...'
                 checkout scm
             }
         }
+
         stage('Build') {
             steps {
                 echo 'Compilando el proyecto...'
-                bat 'mvn clean install' // Usa el comando de compilación apropiado para tu proyecto
+                bat 'mvn clean install' // Comando para Windows
             }
         }
+
         stage('Test') {
             steps {
                 echo 'Ejecutando pruebas...'
-                sh 'mvn test' // Reemplaza con las pruebas específicas de tu proyecto
+                bat 'mvn test'
             }
         }
-        stage('Deploy') {
+
+        stage('Deploy to Test Environment') {
             steps {
-                echo 'Desplegando a entorno de pruebas...'
-                bat './deploy.sh' // Simula el despliegue con un script de ejemplo
+                echo 'Desplegando en el entorno de pruebas...'
+                bat """
+                copy target\\*.jar ${TEST_ENV}
+                echo 'Despliegue completado.'
+                """
             }
         }
     }
+
     post {
         success {
-            echo 'Pipeline ejecutado con éxito.'
-            mail to: "${EMAIL_RECIPIENTS}",
-                 subject: "Éxito: Build ${env.BUILD_NUMBER}",
-                 body: "El pipeline fue ejecutado correctamente. Revisión ${env.GIT_COMMIT}."
+            echo 'Pipeline ejecutado exitosamente.'
+            mail to: 'j.p25gb@gmail.com',
+                 subject: "Pipeline Exitoso: ${currentBuild.fullDisplayName}",
+                 body: "El pipeline fue ejecutado exitosamente.\nRevisar detalles aquí: ${env.BUILD_URL}"
         }
         failure {
             echo 'Pipeline falló.'
-            mail to: "${EMAIL_RECIPIENTS}",
-                 subject: "Fallo: Build ${env.BUILD_NUMBER}",
-                 body: "El pipeline falló. Por favor revisa los logs."
+            mail to: 'j.p25gb@gmail.com',
+                 subject: "Pipeline Fallido: ${currentBuild.fullDisplayName}",
+                 body: "El pipeline falló en la etapa ${env.STAGE_NAME}.\nRevisar detalles aquí: ${env.BUILD_URL}"
         }
     }
 }
