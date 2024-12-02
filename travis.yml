@@ -1,5 +1,5 @@
-language: node_js
-node_js:
+language:python:3.14.0a1-alpine3.19
+python:3.14.0a1-alpine3.19:
   - "18"
 services:
   - docker
