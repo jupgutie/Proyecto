@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "18"
+services:
+  - docker
+before_script:
+  - docker-compose up -d
+script:
+  - docker exec app npm test
+after_script:
+  - docker-compose down
